@@ -1,0 +1,2 @@
+-- Seed data intentionally starts empty.
+-- This is a private single-user app; create the first user through Supabase Auth.
