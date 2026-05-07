@@ -17,7 +17,7 @@ import {
   Timer,
 } from "lucide-react"
 
-import type { Goal } from "@/data/me-os"
+import type { Goal } from "@/data/gent-os"
 
 export function GoalWorkspace({ goal }: { goal: Goal }) {
   switch (goal.slug) {
@@ -78,7 +78,7 @@ function WorkspaceFrame({
                 <p className="mt-1 text-sm text-primary/45">{goal.category}</p>
               </div>
             </div>
-            <h1 className="max-w-5xl text-6xl font-medium leading-[0.84] tracking-[-0.07em] md:text-8xl">
+            <h1 className="max-w-5xl font-serif text-6xl italic leading-[0.88] md:text-8xl">
               {title}
             </h1>
           </div>

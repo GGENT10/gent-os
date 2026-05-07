@@ -1,8 +1,8 @@
-# Me OS Project Context
+# Gent OS Project Context
 
 ## One Sentence
 
-Me OS is a private personal operating system for one person: a structured life database, custom workspace environment, and AI operator that turns raw life input into durable state, evidence, decisions, and next actions.
+Gent OS is a private personal operating system for one person: a structured life database, custom workspace environment, and AI operator that turns raw life input into durable state, evidence, decisions, and next actions.
 
 ## User Context
 
@@ -12,7 +12,7 @@ This is not a consumer productivity product. It is not being optimized for gener
 
 ## Product Philosophy
 
-Me OS should not feel like a todo app with a chatbot. It should feel like a private instrument panel for a life.
+Gent OS should not feel like a todo app with a chatbot. It should feel like a private instrument panel for a life.
 
 The product exists because normal apps split life into disconnected silos:
 
@@ -23,7 +23,7 @@ The product exists because normal apps split life into disconnected silos:
 - finance in spreadsheets
 - AI conversations with no durable state
 
-Me OS should unify these into one personal state system.
+Gent OS should unify these into one personal state system.
 
 The central idea:
 
@@ -620,4 +620,3 @@ Create a strong project foundation:
 3. custom workspace registry
 4. database/auth next
 5. AI core loop after structured state exists
-

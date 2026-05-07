@@ -16,7 +16,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Me OS",
+  title: "Gent OS",
   description: "A private personal operating system for durable life state.",
 };
 

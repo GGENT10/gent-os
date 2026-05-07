@@ -1,7 +1,4 @@
-"use client"
-
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import {
   Activity,
   BarChart3,
@@ -19,8 +16,9 @@ import {
   ShieldCheck,
 } from "lucide-react"
 
-import { goals } from "@/data/me-os"
-import { cn } from "@/lib/utils"
+import { goals } from "@/data/gent-os"
+
+import { ActiveLink, RouteTitle } from "./active-link"
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: Home },
@@ -33,6 +31,7 @@ const navItems = [
   { href: "/settings", label: "Settings", icon: Settings },
 ]
 
+const routeTitles = navItems.map(({ href, label }) => ({ href, label }))
 const romanNumerals = ["I", "II", "III", "IV"]
 
 export function AppShell({
@@ -42,8 +41,6 @@ export function AppShell({
   children: React.ReactNode
   userEmail?: string
 }) {
-  const pathname = usePathname()
-
   return (
     <div className="min-h-screen overflow-hidden bg-black text-[#E1E0CC]">
       <div className="bg-noise pointer-events-none fixed inset-0 opacity-[0.11]" />
@@ -65,8 +62,8 @@ export function AppShell({
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-5xl font-medium leading-[0.85] tracking-[-0.08em] text-[#E1E0CC]">
-                    Me OS
+                  <p className="font-serif text-5xl italic leading-[0.85] text-[#E1E0CC]">
+                    Gent OS
                   </p>
                   <p className="mt-3 text-[10px] uppercase tracking-[0.22em] text-primary/46">
                     Private operating index
@@ -80,18 +77,14 @@ export function AppShell({
 
             <nav className="mt-5 space-y-1.5">
               {navItems.map((item, index) => {
-                const active =
-                  pathname === item.href || pathname.startsWith(`${item.href}/`)
                 const Icon = item.icon
 
                 return (
-                  <Link
+                  <ActiveLink
                     key={item.href}
                     href={item.href}
-                    className={cn(
-                      "group flex items-center justify-between rounded-full px-3 py-2.5 text-sm text-primary/54 transition hover:bg-primary/8 hover:text-[#E1E0CC]",
-                      active && "bg-primary text-black hover:bg-primary hover:text-black"
-                    )}
+                    className="group flex items-center justify-between rounded-full px-3 py-2.5 text-sm text-primary/54 transition hover:bg-primary/8 hover:text-[#E1E0CC]"
+                    activeClassName="bg-primary text-black hover:bg-primary hover:text-black"
                   >
                     <span className="flex min-w-0 items-center gap-3">
                       <Icon className="size-4 shrink-0" />
@@ -100,7 +93,7 @@ export function AppShell({
                     <span className="font-mono text-[10px] opacity-50">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                  </Link>
+                  </ActiveLink>
                 )
               })}
             </nav>
@@ -147,29 +140,23 @@ export function AppShell({
         </aside>
 
         <main className="min-w-0 flex-1 lg:pl-4">
-          <TopBar pathname={pathname} userEmail={userEmail} />
+          <TopBar userEmail={userEmail} />
           <div className="mx-auto w-full max-w-[1680px] pb-24 pt-3 lg:pt-4">
             {children}
           </div>
         </main>
       </div>
 
-      <MobileDock pathname={pathname} />
+      <MobileDock />
     </div>
   )
 }
 
 function TopBar({
-  pathname,
   userEmail,
 }: {
-  pathname: string
   userEmail?: string
 }) {
-  const title =
-    navItems.find((item) => pathname === item.href || pathname.startsWith(`${item.href}/`))
-      ?.label ?? "Me OS"
-
   return (
     <header className="sticky top-3 z-40 rounded-[1.35rem] border border-primary/10 bg-[#101010]/82 px-3 py-3 text-[#E1E0CC] shadow-[0_24px_80px_rgba(0,0,0,0.42)] backdrop-blur-xl sm:px-5 lg:top-5 lg:px-5">
       <div className="mx-auto flex max-w-[1680px] items-center justify-between gap-3">
@@ -189,9 +176,7 @@ function TopBar({
                 day: "numeric",
               })}
             </p>
-            <h1 className="truncate text-2xl leading-none tracking-[-0.04em] text-[#E1E0CC] md:text-3xl">
-              {title}
-            </h1>
+            <RouteTitle fallback="Gent OS" titles={routeTitles} />
           </div>
         </div>
 
@@ -227,39 +212,34 @@ function TopBar({
   )
 }
 
-function MobileDock({ pathname }: { pathname: string }) {
+function MobileDock() {
   const mobileItems = navItems.slice(0, 5)
 
   return (
     <nav className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-6 rounded-full border border-primary/12 bg-[#101010]/92 p-1.5 shadow-[0_24px_80px_rgba(0,0,0,0.62)] backdrop-blur-xl lg:hidden">
       {mobileItems.map((item) => {
-        const active = pathname === item.href || pathname.startsWith(`${item.href}/`)
         const Icon = item.icon
 
         return (
-          <Link
+          <ActiveLink
             key={item.href}
             href={item.href}
-            className={cn(
-              "grid size-10 place-items-center rounded-full text-primary/48",
-              active && "bg-primary text-black"
-            )}
-            aria-label={item.label}
+            className="grid size-10 place-items-center rounded-full text-primary/48"
+            activeClassName="bg-primary text-black"
+            ariaLabel={item.label}
           >
             <Icon className="size-4" />
-          </Link>
+          </ActiveLink>
         )
       })}
-      <Link
+      <ActiveLink
         href="/ai"
-        className={cn(
-          "grid size-10 place-items-center rounded-full text-primary/48",
-          pathname.startsWith("/ai") && "bg-primary text-black"
-        )}
-        aria-label="AI"
+        className="grid size-10 place-items-center rounded-full text-primary/48"
+        activeClassName="bg-primary text-black"
+        ariaLabel="AI"
       >
         <MessageSquare className="size-4" />
-      </Link>
+      </ActiveLink>
     </nav>
   )
 }

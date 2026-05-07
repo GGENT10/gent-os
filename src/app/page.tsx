@@ -1,12 +1,5 @@
-"use client";
+import Image from "next/image";
 
-import {
-  motion,
-  type MotionValue,
-  useInView,
-  useScroll,
-  useTransform,
-} from "framer-motion";
 import {
   ArrowRight,
   Check,
@@ -15,9 +8,6 @@ import {
   Sparkles,
   Waypoints,
 } from "lucide-react";
-import { useRef } from "react";
-
-const ease = [0.16, 1, 0.3, 1] as const;
 
 const heroVideo =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4";
@@ -74,22 +64,18 @@ function WordsPullUp({
   showAsterisk?: boolean;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
   const words = text.split(" ");
 
   return (
-    <div ref={ref} className={className}>
+    <div className={className}>
       {words.map((word, index) => {
         const isLast = index === words.length - 1;
 
         return (
-          <motion.span
+          <span
             aria-hidden="true"
-            className="relative inline-block overflow-hidden pr-[0.04em]"
-            initial={{ y: 20, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : undefined}
-            transition={{ duration: 0.9, delay: index * 0.08, ease }}
+            className="landing-word relative inline-block overflow-hidden pr-[0.04em]"
+            style={{ animationDelay: `${index * 80}ms` }}
             key={`${word}-${index}`}
           >
             {word}
@@ -98,7 +84,7 @@ function WordsPullUp({
                 *
               </span>
             ) : null}
-          </motion.span>
+          </span>
         );
       })}
       <span className="sr-only">{text}</span>
@@ -113,8 +99,6 @@ function WordsPullUpMultiStyle({
   segments: { text: string; className?: string }[];
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
   const words = segments.flatMap((segment) =>
     segment.text.split(" ").map((word) => ({
       word,
@@ -123,66 +107,27 @@ function WordsPullUpMultiStyle({
   );
 
   return (
-    <div ref={ref} className={`inline-flex flex-wrap justify-center ${className}`}>
+    <div className={`inline-flex flex-wrap justify-center ${className}`}>
       {words.map(({ word, className: wordClassName }, index) => (
         <span className="overflow-hidden pr-[0.22em]" key={`${word}-${index}`}>
-          <motion.span
-            className={`inline-block ${wordClassName ?? ""}`}
-            initial={{ y: 20, opacity: 0 }}
-            animate={isInView ? { y: 0, opacity: 1 } : undefined}
-            transition={{ duration: 0.85, delay: index * 0.08, ease }}
+          <span
+            className={`landing-word inline-block ${wordClassName ?? ""}`}
+            style={{ animationDelay: `${index * 80}ms` }}
           >
             {word}
-          </motion.span>
+          </span>
         </span>
       ))}
     </div>
   );
 }
 
-function AnimatedLetter({
-  char,
-  index,
-  total,
-  progress,
-}: {
-  char: string;
-  index: number;
-  total: number;
-  progress: MotionValue<number>;
-}) {
-  const charProgress = index / total;
-  const opacity = useTransform(
-    progress,
-    [Math.max(0, charProgress - 0.1), Math.min(1, charProgress + 0.05)],
-    [0.2, 1],
-  );
-
-  return <motion.span style={{ opacity }}>{char}</motion.span>;
-}
-
 function AboutTextReveal({ text }: { text: string }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.8", "end 0.2"],
-  });
-  const chars = Array.from(text);
-
   return (
     <p
-      ref={ref}
-      className="mx-auto mt-10 max-w-2xl text-xs leading-relaxed text-[#DEDBC8] sm:text-sm md:text-base"
+      className="landing-fade-in mx-auto mt-10 max-w-2xl text-xs leading-relaxed text-[#DEDBC8] sm:text-sm md:text-base"
     >
-      {chars.map((char, index) => (
-        <AnimatedLetter
-          char={char}
-          index={index}
-          progress={scrollYProgress}
-          total={chars.length}
-          key={`${char}-${index}`}
-        />
-      ))}
+      {text}
     </p>
   );
 }
@@ -206,6 +151,7 @@ export default function Home() {
             loop
             muted
             playsInline
+            preload="auto"
             className="absolute inset-0 h-full w-full object-cover opacity-80"
             src={heroVideo}
           />
@@ -231,33 +177,29 @@ export default function Home() {
           <div className="absolute bottom-0 left-0 right-0 z-10 px-5 pb-7 sm:px-7 md:px-10 md:pb-10 lg:px-12">
             <div className="grid items-end gap-7 md:grid-cols-12 md:gap-6">
               <WordsPullUp
-                text="Me OS"
+                text="Gent OS"
                 showAsterisk
-                className="col-span-8 text-[26vw] font-medium leading-[0.85] tracking-[-0.07em] text-[#E1E0CC] sm:text-[24vw] md:text-[20vw] lg:text-[16vw] xl:text-[14vw] 2xl:text-[13vw]"
+                className="col-span-8 font-serif text-[26vw] italic leading-[0.88] text-[#E1E0CC] sm:text-[24vw] md:text-[20vw] lg:text-[16vw] xl:text-[14vw] 2xl:text-[13vw]"
               />
 
               <div className="col-span-4 mb-1 max-w-md md:mb-6">
-                <motion.p
-                  className="text-xs leading-[1.2] text-primary/70 sm:text-sm md:text-base"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.9, delay: 0.5, ease }}
+                <p
+                  className="landing-word text-xs leading-[1.2] text-primary/70 sm:text-sm md:text-base"
+                  style={{ animationDelay: "320ms" }}
                 >
                   A private operating system for turning raw life input into
                   state, evidence, decisions, and next action.
-                </motion.p>
-                <motion.a
-                  className="group mt-5 inline-flex items-center gap-2 rounded-full bg-primary py-1.5 pl-5 pr-1.5 text-sm font-medium text-black transition-all hover:gap-3 sm:text-base"
+                </p>
+                <a
+                  className="landing-word group mt-5 inline-flex items-center gap-2 rounded-full bg-primary py-1.5 pl-5 pr-1.5 text-sm font-medium text-black transition-all hover:gap-3 sm:text-base"
                   href="/dashboard"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.9, delay: 0.7, ease }}
+                  style={{ animationDelay: "460ms" }}
                 >
                   Enter the system
                   <span className="grid h-9 w-9 place-items-center rounded-full bg-black transition-transform group-hover:scale-110 sm:h-10 sm:w-10">
                     <ArrowRight className="h-4 w-4 text-[#E1E0CC]" />
                   </span>
-                </motion.a>
+                </a>
               </div>
             </div>
           </div>
@@ -278,28 +220,25 @@ function About() {
     >
       <div className="mx-auto max-w-6xl rounded-[1.75rem] bg-[#101010] px-5 py-16 text-center sm:px-8 md:px-12 md:py-24">
         <div className="text-[10px] text-primary sm:text-xs">Private state</div>
-        <h2 className="mx-auto mt-8 max-w-3xl text-3xl font-normal leading-[0.95] text-[#E1E0CC] sm:text-4xl sm:leading-[0.9] md:text-5xl lg:text-6xl xl:text-7xl">
+        <h2 className="mx-auto mt-8 max-w-3xl font-serif text-3xl italic leading-[0.98] text-[#E1E0CC] sm:text-4xl sm:leading-[0.94] md:text-5xl lg:text-6xl xl:text-7xl">
           <WordsPullUpMultiStyle
             segments={[
               { text: "Not a todo app," },
               {
                 text: "a living instrument panel.",
-                className: "font-serif italic",
+                className: "text-primary",
               },
               { text: "Every important signal becomes durable state." },
             ]}
           />
         </h2>
-        <AboutTextReveal text="Me OS is built around one premise: your life should not be scattered across notes, tasks, metrics, memories and AI chats. Say what happened, what changed, or what you are deciding, and the system turns it into evidence that can compound." />
+        <AboutTextReveal text="Gent OS is built around one premise: your life should not be scattered across notes, tasks, metrics, memories and AI chats. Say what happened, what changed, or what you are deciding, and the system turns it into evidence that can compound." />
       </div>
     </section>
   );
 }
 
 function Features() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
     <section
       className="relative min-h-screen overflow-hidden bg-black px-4 py-16 sm:px-6 md:py-24"
@@ -308,7 +247,7 @@ function Features() {
       <div className="bg-noise pointer-events-none absolute inset-0 opacity-[0.15]" />
       <div className="relative mx-auto max-w-7xl">
         <header className="max-w-3xl">
-          <h2 className="text-xl font-normal leading-tight sm:text-2xl md:text-3xl lg:text-4xl">
+          <h2 className="font-serif text-2xl italic leading-tight sm:text-3xl md:text-4xl lg:text-5xl">
             <WordsPullUpMultiStyle
               className="justify-start text-left"
               segments={[
@@ -326,15 +265,11 @@ function Features() {
         </header>
 
         <div
-          ref={ref}
           id="memory"
           className="mt-12 grid gap-3 sm:gap-2 md:grid-cols-2 md:gap-1 lg:h-[480px] lg:grid-cols-4"
         >
-          <motion.article
-            className="relative min-h-[360px] overflow-hidden rounded-2xl bg-[#212121] lg:min-h-0"
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={isInView ? { scale: 1, opacity: 1 } : undefined}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+          <article
+            className="landing-card relative min-h-[360px] overflow-hidden rounded-2xl bg-[#212121] lg:min-h-0"
           >
             <video
               aria-hidden="true"
@@ -342,6 +277,7 @@ function Features() {
               loop
               muted
               playsInline
+              preload="none"
               className="absolute inset-0 h-full w-full object-cover"
               src={featureVideo}
             />
@@ -354,34 +290,30 @@ function Features() {
                 Your private command canvas.
               </p>
             </div>
-          </motion.article>
+          </article>
 
           {featureCards.map((card, index) => {
             const Icon = card.icon;
 
             return (
-              <motion.article
-                className="flex min-h-[360px] flex-col rounded-2xl bg-[#212121] p-5 lg:min-h-0"
+              <article
+                className="landing-card flex min-h-[360px] flex-col rounded-2xl bg-[#212121] p-5 lg:min-h-0"
                 id={index === featureCards.length - 1 ? "reviews" : undefined}
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={isInView ? { scale: 1, opacity: 1 } : undefined}
-                transition={{
-                  duration: 0.75,
-                  delay: (index + 1) * 0.15,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
+                style={{ animationDelay: `${(index + 1) * 120}ms` }}
                 key={card.title}
               >
                 <div className="flex items-center justify-between">
-                  <img
+                  <Image
                     alt=""
                     className="h-10 w-10 rounded-xl object-cover sm:h-12 sm:w-12"
+                    width="48"
+                    height="48"
                     src={card.image}
                   />
                   <Icon className="h-5 w-5 text-primary/70" />
                 </div>
                 <div className="mt-8 flex items-baseline justify-between gap-4">
-                  <h3 className="text-2xl leading-none text-[#E1E0CC]">
+                  <h3 className="font-serif text-3xl italic leading-none text-[#E1E0CC]">
                     {card.title}
                   </h3>
                   <span className="text-xs text-gray-500">{card.number}</span>
@@ -401,7 +333,7 @@ function Features() {
                   Learn more
                   <ArrowRight className="h-4 w-4 -rotate-45" />
                 </a>
-              </motion.article>
+              </article>
             );
           })}
         </div>

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 
 import { GoalWorkspace } from "@/components/goals/workspaces"
-import { getGoal } from "@/data/me-os"
+import { getGoal } from "@/data/gent-os"
 
 export default async function GoalPage({
   params,

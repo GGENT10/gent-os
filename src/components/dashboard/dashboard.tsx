@@ -9,7 +9,7 @@ import {
   Quote,
 } from "lucide-react"
 
-import { goals, recentDecisions } from "@/data/me-os"
+import { goals, recentDecisions } from "@/data/gent-os"
 
 const heroVideo =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_170732_8a9ccda6-5cff-4628-b164-059c500a2b41.mp4"
@@ -42,7 +42,7 @@ export function Dashboard() {
                 <p className="text-[10px] uppercase tracking-[0.22em] text-primary/54">
                   private index / today
                 </p>
-                <h1 className="mt-6 max-w-5xl text-7xl font-medium leading-[0.82] tracking-[-0.07em] text-[#E1E0CC] md:text-8xl xl:text-[9rem]">
+                <h1 className="mt-6 max-w-5xl font-serif text-7xl italic leading-[0.86] text-[#E1E0CC] md:text-8xl xl:text-[9rem]">
                   What moved?
                 </h1>
               </div>
@@ -174,7 +174,7 @@ function Panel({
           <p className="text-[10px] uppercase tracking-[0.22em] text-primary/42">
             {eyebrow}
           </p>
-          <h2 className="mt-2 text-4xl leading-none tracking-[-0.05em] text-[#E1E0CC]">
+          <h2 className="mt-2 font-serif text-4xl italic leading-none text-[#E1E0CC]">
             {title}
           </h2>
         </div>
@@ -239,7 +239,7 @@ export function ModulePlaceholder({
         <p className="text-[10px] uppercase tracking-[0.22em] text-primary/48">
           {eyebrow}
         </p>
-        <h1 className="mt-5 text-7xl font-medium leading-[0.84] tracking-[-0.07em] text-[#E1E0CC] md:text-8xl">
+        <h1 className="mt-5 font-serif text-7xl italic leading-[0.88] text-[#E1E0CC] md:text-8xl">
           {title}
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-primary/58">

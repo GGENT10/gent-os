@@ -9,7 +9,7 @@ import {
   type LucideIcon,
 } from "lucide-react"
 
-import { goals, type GoalSlug } from "@/data/me-os"
+import { goals, type GoalSlug } from "@/data/gent-os"
 import { cn } from "@/lib/utils"
 
 const iconMap: Record<GoalSlug, LucideIcon> = {
@@ -73,9 +73,9 @@ export function GoalsCommandMap() {
             <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-primary/46">
               goals / command map
             </p>
-            <h1 className="mt-5 max-w-5xl text-6xl font-medium leading-[0.86] tracking-[-0.07em] text-[#E1E0CC] md:text-8xl">
+            <h1 className="mt-5 max-w-5xl font-serif text-6xl italic leading-[0.9] text-[#E1E0CC] md:text-8xl">
               Four rooms,
-              <span className="block font-serif italic tracking-normal">
+              <span className="block">
                 one operating floor.
               </span>
             </h1>
@@ -128,7 +128,7 @@ export function GoalsCommandMap() {
                         <p className="font-mono text-[10px] uppercase tracking-[0.18em] opacity-45">
                           {room.room} / {room.coordinate}
                         </p>
-                        <h3 className="mt-2 text-2xl leading-tight">
+                        <h3 className="mt-2 font-serif text-3xl italic leading-none">
                           {goal.title}
                         </h3>
                       </div>

@@ -28,7 +28,7 @@ Set the Supabase Site URL to `NEXT_PUBLIC_SITE_URL`, and add local and productio
 
 ## Database
 
-The first schema lives in `supabase/migrations/20260506214001_initial_me_os_schema.sql`, created with the Supabase CLI.
+The first schema lives in `supabase/migrations/20260506214001_initial_gent_os_schema.sql`, created with the Supabase CLI.
 
 The schema enables RLS on every public table and scopes rows by `auth.uid()`. The server data layer still scopes by the current user; RLS is defense in depth, not the only boundary.
 

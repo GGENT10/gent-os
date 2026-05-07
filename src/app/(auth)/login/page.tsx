@@ -35,8 +35,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
             <p className="text-[10px] uppercase tracking-[0.22em] text-primary/46">
               Private access
             </p>
-            <h1 className="mt-2 text-5xl leading-[0.88] tracking-[-0.06em]">
-              Me OS
+            <h1 className="mt-2 font-serif text-5xl italic leading-[0.88]">
+              Gent OS
             </h1>
           </div>
           <div className="grid size-12 place-items-center rounded-full bg-primary text-black">
